@@ -1,0 +1,99 @@
+{% extends "layout.html" %}
+{% load static %}
+{% block title %}
+sala x
+{% endblock %}
+
+{% block main %}
+
+
+
+<div class="project-card">
+  <div class="project-title"> {{sala.id}} {{ sala.name }}</div>
+  <div class="progress-bar">
+      <div class="progress" style="width: {{ sala.progreso }}%;">
+          {{ sala.progreso|floatformat:1 }}%
+      </div>
+  </div>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <div class="project-dates">
+    <div id="ll" style="display: flex;">
+      <div>
+        <img src="{% static 'img/toro_kuro_feli.png' %}" alt="" style="height: 40px; width: 40px; float: right;">
+        <p >Inicio: {{ sala.fechai }}</p> 
+      </div>
+      <div style="padding: 2px;">
+        <button class="btn" id="openModal">
+          <i class="fas fa-pencil-alt" style="color: #083A2E;"></i>
+        </button>
+      </div>
+    </div>
+
+
+
+    <!-- mi modal equisde -->
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <form action="{% url 'editar_fechai' %}" method="post">
+          {% csrf_token %}
+          <div class="login-box">
+            <div class="user-box">
+              <input  type="date" name="date_final" id="date_final" required="" placeholder= "jjj">
+                <input type="hidden" name="id_sala" value="{{sala.id}}">
+              <label id="LISTA_SOS_GOKU" >Fecha inicio del proyecto  dia/mes/año </label>
+            </div>
+          </div>
+          <input type="submit" value="actualizar">
+        </form>
+      </div>
+    </div>
+
+    <div id="rr">
+      <img src="{% static 'img/toro_kuro_preocupao.png' %}" alt="" style="height: 40px; width: 40px; float: right;">
+      <p>Fin: {{ sala.fechaf }}</p>
+    </div>
+  </div>
+</div>
+
+<div class="despelote">
+  <div class="box_mensaje" style="padding: 15px;">
+  </div>
+</div>
+
+  <script src="{% static '/script/jquery-3.7.1.min.js' %}"></script>
+
+<div class="message-container">
+  <div  class="message-form">
+      <input id="inpMensaje" name="message" placeholder="Escribe aquí tu mensaje..." required></input>
+      <button submit="" id="btnMensaje" >Enviar</button>
+  </div>
+</div>
+
+<!--
+  <div class="board">
+      <div class="list" id="list-1">
+        <h3>Por Hacer</h3>
+        <div class="card" draggable="true">Tarea 1</div>
+        <div class="card" draggable="true">Tarea 2</div>
+      </div>
+      <div class="list" id="list-2">
+        <h3>En Proceso</h3>
+        <div class="card" draggable="true">Tarea 3</div>
+      </div>
+      <div class="list" id="list-3">
+        <h3>Hecho</h3>
+        <div class="card" draggable="true">Tarea 4</div>
+      </div>
+    </div>
+-->
+  <script>
+    var nombre =  '{{ request.user.first_name }}'
+    var apellido =  '{{ request.user.last_name }}'
+    var sala_id = "{{sala.id}}"
+  </script>
+
+
+ 
+{% endblock %}
+

@@ -1,0 +1,265 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>re-gis-tra-te</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap');
+
+        /* Colores y fuentes */
+        :root {
+            --primary-bg-color: #F7B1AB;
+            --secondary-bg-color: #807182;
+            --font-color: rgba(0, 0, 0, .8);
+            --form-border-color: rgba(0, 0, 0, .1);
+            --font-family: 'Montserrat', sans-serif;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap');
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            font-family: 'Caveat', cursive;
+            padding: 0;
+            color: #960604 !important;
+        }
+h2{
+    color: #083A2E !important;
+    text-transform:uppercase;
+}
+        body {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    font-family: "Comic Sans MS", sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    height: 100vh;
+    width: 100vw;
+     background-color: #083A2E;
+    /*background: url('static/img/black.jpg') center center / cover no-repeat; */
+    color: rgba(0,0,0,.8);
+}
+
+
+        .signup-container {
+            display: grid;
+            grid-template-areas: "left right";
+            max-width: 900px;
+           
+        }
+
+        .left-container {
+    background: var(--secondary-bg-color);
+    overflow:visible;
+    padding: 40px 0 0 0;
+    position: relative;
+    text-align: center;
+    width: 300px;
+    height: 100%; /* Asegúrate de que tenga una altura definida */
+    background: url('static/img/red_cuadro.jpg') center center / cover no-repeat; 
+    
+            
+}
+
+.puppy{
+    width: 100%;
+    height: 100%; /* Asegúrate de que tenga una altura definida */
+    overflow:visible;
+    padding-left: 0px;
+    position: absolute; /* o relative, fixed, sticky */
+    z-index: 9999;
+}
+
+.full-size {
+    width: 300px; /* Ancho completo del contenedor */
+    height:350px; /* Alto completo del contenedor */
+    top: 60px;
+    left: 60px;
+    position: absolute; /* o relative, fixed, sticky */
+    z-index: 9999;
+    
+    
+}
+
+
+        
+
+        .right-container {
+            background: 	
+            #f5f5dc;
+            display: grid;
+            width: 500px;
+            padding: 40px;
+            
+        }
+
+        .right-container h1 {
+            color: var(--font-color);
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .set {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+        }
+
+        .right-container input {
+            border: 1px solid var(--form-border-color);
+            border-radius: 4px;
+            height: 38px;
+            padding-left: 5px;
+            width: 100%;
+            color: var(--font-color);
+        }
+
+        .right-container label {
+            color: var(--font-color);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .pets-photo {
+            display: flex;
+            align-items: center;
+        }
+        .cont_img{
+            margin-right: 15px;
+    background-color: #960604;
+    height: 30px;
+    width: 30px;
+    border-radius: 50px;
+    align-items: center;
+    float: left;
+        }
+    
+        
+
+        .radio-container {
+            background: #fff;
+            border: 1px solid var(--form-border-color);
+            border-radius: 4px;
+            display: inline-block;
+            padding: 5px;
+            width: 100%;
+        }
+
+        .radio-container label {
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 2px;
+            display: inline-block;
+            height: 26px;
+            line-height: 26px;
+            text-align: center;
+            transition: .2s all ease-in-out;
+            width: 80px;
+            cursor: pointer;
+        }
+
+        .radio-container input[type="radio"] {
+            display: none;
+        }
+
+        .radio-container input[type="radio"]:checked + label {
+            background: var(--primary-bg-color);
+            border: 1px solid var(--form-border-color);
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            background: #fff;
+            padding: 10px;
+            margin-bottom: -40px;
+            margin-left: -40px;
+            margin-right: -40px;
+        }
+
+        footer button {
+            border: 1px solid rgba(0, 0, 0, .2);
+            height: 38px;
+            border-radius: 19px;
+            width: 100px;
+            font-family: var(--font-family);
+            transition: .2s all ease-in-out;
+        }
+
+        #back {
+            background: #fff;
+            color: var(--font-color);
+        }
+
+        #back:hover {
+            background: #171A2B;
+            color: white;
+        }
+
+        #next {
+            background: var(--secondary-bg-color);
+            color: #fff;
+            border: none;
+        }
+
+        #next:hover {
+            background: #171A2B;
+        }
+    </style>
+</head>
+<body>
+    {% if message %}
+    <script>
+        alert("{{ message }}");
+    </script>
+    {% endif %}
+    <div class="signup-container">
+        <div class="left-container">
+            <div class="puppy">
+                <img class="full-size" src="{% static 'img/toro_periodico.png' %}" alt="Puppy">
+            </div>
+        </div>
+    
+        <form action="{% url 'login' %}" method="post">
+            {% csrf_token %}
+            <div class="right-container">
+                <header>
+                    <h2>¡Bienvenido de vuelta, te esperabamos!</h2>
+                    
+                    <div class="set">
+                        <div class="pets-breed">
+                            <label for="pets-breed">Gmail</label>
+                            <input id="pets-breed" type="text" placeholder="nnn@gmail.com" name="gmail">
+                        </div>
+                        
+                    </div>
+                    <div class="set">
+                        <div class="pets-breed">
+                            <label for="pets-breed">Contraseña</label>
+                            <input id="pets-breed" type="password" placeholder="Contraseña" name="password">
+                        </div>
+                        
+                    </div>
+                    
+                </header>
+                <br>
+                <p style="margin-bottom: 5px;">¿No estas registrado? </p>
+           
+                <footer>
+                    <div>
+                        <button id="back">  <a style="text-decoration: none;" href="{% url 'register' %}">registrate</a>  </button>
+                    </div>
+                    
+                    <button id="next" type="submit">Siguiente</button>
+                </footer>
+            </div>
+    
+        </form>
+        
+    </div>
+</body>
+</html>

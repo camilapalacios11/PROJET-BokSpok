@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+mis salas
+{% endblock %}
+
+{% block main %}
+  
+
+<h3>Mis salas de trabajo: </h3>
+<div class="ag-courses_box">
+
+
+        {% for i in salas %}
+        
+        <a href="{% url 'mostrar_sala' i.id %}" style="text-decoration: none;">
+          {% csrf_token %}
+          <input type="hidden" value="{{ i.id }}" name="id_sala">
+          <div class="ag-courses_item">
+            <button type="submit" class="ag-courses-item_link" style="border-style: none !important; text-align: justify;">
+              <div class="ag-courses-item_bg"></div>
+      
+              <div class="ag-courses-item_title">
+                {{i.name}}
+              </div>
+              <div class="ag-courses-item_date-box">
+                Fecha culmine:
+                <span class="ag-courses-item_date">
+                  {{i.fechaf}}
+                </span>
+              </div>
+            </button>
+          </div>
+          
+        </a>
+        {% endfor %}
+
+      </div>
+
+      <form action="{% url 'index' %}" method="post">
+        {% csrf_token %}
+        <button type="submit"> crear sala </button>
+      </form>
+
+      {% if  salas %} 
+      <img  class="para_marca" src="{% static 'img/toro_tele.png' %}" alt="">
+      {% else %}
+      <img  class="para_marca" src="{% static 'img/toro_solo.png' %}" alt="">
+      {% endif %} 
+
+    
+{% endblock %}
+

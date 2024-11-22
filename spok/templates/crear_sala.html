@@ -1,0 +1,137 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+crear sala
+{% endblock %}
+
+{% block main %}
+{% if message %}
+<script>
+  alert("{{ message }}");
+  </script>
+{% endif %}
+<form action="{% url 'crear_sala' %}" method="post">
+  {% csrf_token %}
+
+      <div class="conte_hoja">
+        <div class="div_hoja">
+          
+          <style>
+            html {
+  height: 100%;
+}
+
+
+.login-box h2 {
+  margin: 0 0 30px;
+  padding: 0;
+}
+
+.login-box .user-box {
+  position: relative;
+}
+
+.login-box .user-box input {
+  width: 100%;
+  padding: 10px 0;
+  font-size: 20px;
+  margin-bottom: 30px;
+  border: none;
+  border-bottom: 1px solid red;
+  outline: none;
+
+  background: transparent;
+}
+.login-box .user-box label {
+  position: absolute;
+  top:0;
+  left: 0;
+  padding: 10px 0;
+  font-size: 16px;
+  pointer-events: none;
+  transition: .5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+  top: -20px;
+  left: 0;
+  color: #960604;
+  font-size: 14px;
+  background-color: transparent !important;
+}
+
+.login-box form a {
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: red;
+  font-size: 16px;
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+  transition: .5s;
+  margin-top: 40px;
+  letter-spacing: 4px
+}
+
+          </style>
+
+          <div class="login-box">
+            <h2 style="color: #083A2E !important; ">Crear un proyecto nuevo</h2>
+              <div class="user-box">
+                <input type="text" name="nombre_sala" required="">
+                <label>Nombre del proyecto</label>
+              </div>
+              <div class="user-box">
+                <input type="text" name="descri_sala" required="">
+                <label>Descripcion del proyecto</label>
+              </div>
+
+            
+                <div class="user-box">
+                  <input  type="date" name="date_final" id="date_final" required="" placeholder= "jjj">
+                  
+                  <label id="LISTA_SOS_GOKU" >Fecha para finalizar dia/mes/año </label>
+                </div>
+          
+
+                <input type="submit" value="crear">
+            </div>
+            
+            
+          </div>
+          
+          <div class="ladito">
+            <div class="container">
+              <div class="floating-stack">
+                <dl>
+                  {% for hash, personas in usuarios_ordenado.items %}
+                  <dt>{{ hash }}</dt>
+                  {% for p in personas %}
+                  {% if p.1 != "unicamilapalacios@gmail.com" and p.1 != actual %}
+                  <dd>
+                    <button class="personas" onclick="toggleSelection(this, '{{ p.1 }}')" type="button" style="width: 80%;">
+                      <div>
+                        <p style="color: white !important;">{{ p.0 }}</p>
+                        <p style="font-size: 13px; color: #f2c3d9; margin-top: -10px;">{{ p.1 }}</p>
+                      </div>
+                    </button>
+                  </dd>
+                  {% endif %}
+                  {% endfor %}
+                  {% endfor %}
+                </dl>
+              </div>
+            </div>
+            <!-- Campo oculto para almacenar los usuarios seleccionados -->
+            <input type="hidden" name="selected_users" id="selected_users">
+          </div>
+          
+        </div>
+        
+      </form>
+
+{% endblock %}
+

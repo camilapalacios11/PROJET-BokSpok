@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block title %}
+mis salas
+{% endblock %}
+
+{% block main %}
+<style>
+    canvas {
+        border: 1px solid black;
+    }
+    #tools {
+        margin-bottom: 10px;
+    }
+</style>
+
+<div id="tools">
+    <button onclick="activatePencil()">lapiz</button>
+    <button onclick="addRectangle()">rectangulo</button>
+    <button onclick="addLine()">linea</button>
+    <button onclick="addImage()">imagen</button>
+    <button onclick="addText()">texto</button>
+</div>
+<canvas id="canvas" width="800" height="600"></canvas>
+
+<script>
+    // Inicializar el canvas
+const canvas = new fabric.Canvas('canvas');
+
+// Configuración inicial
+canvas.isDrawingMode = false; // Desactivar lápiz por defecto
+
+// Función para activar el lápiz
+function activatePencil() {
+    canvas.isDrawingMode = true; // Activa el lápiz
+    canvas.freeDrawingBrush.width = 2; // Tamaño del lápiz
+    canvas.freeDrawingBrush.color = 'black'; // Color del lápiz
+}
+
+// Función para agregar un rectángulo
+function addRectangle() {
+    canvas.isDrawingMode = false; // Desactiva el lápiz
+    const rect = new fabric.Rect({
+        left: 100,
+        top: 100,
+        fill: 'blue',
+        width: 100,
+        height: 100,
+        selectable: true,
+    });
+    canvas.add(rect);
+}
+
+// Función para agregar una línea
+function addLine() {
+    canvas.isDrawingMode = false; // Desactiva el lápiz
+    const line = new fabric.Line([50, 50, 200, 50], {
+        left: 100,
+        top: 100,
+        stroke: 'red',
+        strokeWidth: 2,
+        selectable: true,
+    });
+    canvas.add(line);
+}
+
+// Función para agregar una imagen
+function addImage() {
+    const imageUrl = prompt("Introduce la URL de la imagen:");
+    if (imageUrl) {
+        fabric.Image.fromURL(imageUrl, function(img) {
+            img.set({
+                left: 100,
+                top: 100,
+                selectable: true,
+            });
+            canvas.add(img);
+        });
+    } else {
+        alert("No se introdujo una URL válida.");
+    }
+}
+
+// Función para agregar texto
+function addText() {
+    const text = new fabric.Textbox('Escribe aquí', {
+        left: 100,
+        top: 100,
+        fontSize: 20,
+        fill: 'black',
+        selectable: true,
+    });
+    canvas.add(text);
+}
+
+// Función para guardar el estado del canvas
+function saveCanvas() {
+    const json = canvas.toJSON();
+    localStorage.setItem('canvasState', JSON.stringify(json));
+    alert("Canvas guardado correctamente.");
+}
+
+// Función para cargar el estado del canvas
+function loadCanvas() {
+    const savedCanvas = localStorage.getItem('canvasState');
+    if (savedCanvas) {
+        canvas.loadFromJSON(savedCanvas, canvas.renderAll.bind(canvas));
+        alert("Canvas cargado correctamente.");
+    } else {
+        alert("No hay ningún estado guardado.");
+    }
+}
+
+// Teclas rápidas (opcional)
+document.addEventListener('keydown', (event) => {
+    if (event.key === 's') {
+        saveCanvas();
+    } else if (event.key === 'l') {
+        loadCanvas();
+    }
+});
+
+</script>
+
+
+    
+{% endblock %}
+
