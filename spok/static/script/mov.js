@@ -76,11 +76,12 @@ $(function(){
 
   console.log(nombre, sala_id)
 
-  var url = 'ws://' + window.location.host + '/ws/mostrar_sala/' + sala_id + '/'
+  var protocol = window.location.protocol === "https:" ? "wss://" : "ws://";
+  var url = protocol + window.location.host + '/ws/mostrar_sala/' + sala_id + '/';
   console.log("mi url -------------------------")
   console.log(url)
-
   var chatSocket = new WebSocket(url)
+
   // Definimos un tiempo de desconexión de 5 minutos (en milisegundos)
   console.log(chatSocket)
 

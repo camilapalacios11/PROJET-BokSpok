@@ -574,3 +574,71 @@ aside {
   margin-top: 40px;
   letter-spacing: 4px
 }
+
+
+/* TODO SOBRE CANVAS */
+#tools {
+  margin-bottom: 10px;
+}
+.container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%; /* Full viewport height */
+  
+}
+
+/* Main Content */
+.main-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Div herramientas */
+.herramientas {
+  height: 10%; /* Takes 15% of the height */
+  background-color: #fef8f8;
+  border-bottom: 1px solid #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+  
+
+  padding: 20px;
+  border: 1px solid #888;
+
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+/* Div canvas */
+.canvas {
+  flex-grow: 1; /* Fills remaining space */
+  background-color: #fff;
+  padding: 10px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Div características */
+.caracteristicas {
+  width: 25%; /* Takes 25% of the width */
+  background-color: #f8f5f1;
+  /* border-left: 1px solid #ccc; */
+  padding: 10px;
+  box-sizing: border-box;
+  
+}
+.caracteristicas button {
+  margin: 5px;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 50%) {
+  .caracteristicas {
+      display: none; /* Hides características */
+  }
+}

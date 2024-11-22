@@ -7,7 +7,8 @@ from channels.generic.websocket import WebsocketConsumer
 
 class ChatConsumer(WebsocketConsumer):
     def connect(self):
-        print("conectado----------------------------")
+        self.id_sala = self.scope['url_route']['kwargs']['id_sala']
+        print(f"Conexión a la sala: {self.id_sala}")
         self.accept()
     
     def disconnect(self, close_code):

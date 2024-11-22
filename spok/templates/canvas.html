@@ -7,40 +7,103 @@ mis salas
 
 {% block main %}
 <style>
-    canvas {
-        border: 1px solid black;
-    }
-    #tools {
-        margin-bottom: 10px;
-    }
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+canvas {
+    border: 1px solid black;
+}
 </style>
 
-<div id="tools">
-    <button onclick="activatePencil()">lapiz</button>
-    <button onclick="addRectangle()">rectangulo</button>
-    <button onclick="addLine()">linea</button>
-    <button onclick="addImage()">imagen</button>
-    <button onclick="addText()">texto</button>
+<div class="container">
+    <div class="main-content">
+        <div class="herramientas">
+            <div id="tools">
+                <button onclick="activatePencil()">Lápiz</button>
+                <button onclick="addRectangle()">Rectángulo</button>
+                <button onclick="addLine()">Línea</button>
+                <button onclick="addImageFromComputer()">Subir Imagen</button>
+                <button onclick="addText()">Texto</button>
+                <button onclick="exportCanvas()">Exportar</button>
+                <button onclick="importCanvas()">Importar</button>
+                <button onclick="activateEraser()">Borrador</button>
+            </div>
+        </div>
+        <div class="canvas">
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+    <div class="caracteristicas">Div características
+            <h3>Opciones de texto</h3>
+            <div>
+                <p>Color:</p>
+                <button onclick="setTextColor('red')" style="background-color: red;"></button>
+                <button onclick="setTextColor('green')" style="background-color: green;"></button>
+                <button onclick="setTextColor('blue')" style="background-color: blue;"></button>
+            </div>
+            <div>
+                <p>Fuente:</p>
+                <button onclick="setFontFamily('Arial')">Arial</button>
+                <button onclick="setFontFamily('Courier New')">Courier</button>
+                <button onclick="setFontFamily('Georgia')">Georgia</button>
+            </div>
+            <div>
+                <p>Tamaño:</p>
+                <button onclick="setFontSize(16)">S</button>
+                <button onclick="setFontSize(24)">M</button>
+                <button onclick="setFontSize(32)">L</button>
+            </div>
+    </div>
 </div>
-<canvas id="canvas" width="800" height="600"></canvas>
 
 <script>
-    // Inicializar el canvas
+// Inicializar el canvas
+// Inicializar el canvas
 const canvas = new fabric.Canvas('canvas');
+
+// Ajustar el tamaño del canvas automáticamente
+const container = document.querySelector('.canvas');
+canvas.setWidth(container.offsetWidth);
+canvas.setHeight(container.offsetHeight);
+
+// Asegurar que el tamaño se actualice al cambiar el tamaño de la ventana
+window.addEventListener('resize', () => {
+    canvas.setWidth(container.offsetWidth);
+    canvas.setHeight(container.offsetHeight);
+    canvas.renderAll();
+});
 
 // Configuración inicial
 canvas.isDrawingMode = false; // Desactivar lápiz por defecto
+let isEraserActive = false; // Modo borrador
 
 // Función para activar el lápiz
 function activatePencil() {
-    canvas.isDrawingMode = true; // Activa el lápiz
+    isEraserActive = false; // Desactivar el borrador
+    canvas.isDrawingMode = true; // Activar modo dibujo
     canvas.freeDrawingBrush.width = 2; // Tamaño del lápiz
     canvas.freeDrawingBrush.color = 'black'; // Color del lápiz
 }
 
+// Función para activar el borrador
+function activateEraser() {
+    isEraserActive = true; // Activar modo borrador
+    canvas.isDrawingMode = true; // Activar modo dibujo
+    canvas.freeDrawingBrush.width = 10; // Tamaño del borrador
+    canvas.freeDrawingBrush.color = 'rgba(255, 255, 255, 0)'; // Color transparente para no dibujar
+}
+
+// Función para desactivar el modo de dibujo (por ejemplo, al agregar texto o figuras)
+function deactivateDrawingMode() {
+    isEraserActive = false; // Desactivar el borrador
+    canvas.isDrawingMode = false; // Desactivar el modo dibujo
+}
+
 // Función para agregar un rectángulo
 function addRectangle() {
-    canvas.isDrawingMode = false; // Desactiva el lápiz
+    deactivateDrawingMode(); // Desactivar dibujo
     const rect = new fabric.Rect({
         left: 100,
         top: 100,
@@ -54,7 +117,7 @@ function addRectangle() {
 
 // Función para agregar una línea
 function addLine() {
-    canvas.isDrawingMode = false; // Desactiva el lápiz
+    deactivateDrawingMode(); // Desactivar dibujo
     const line = new fabric.Line([50, 50, 200, 50], {
         left: 100,
         top: 100,
@@ -66,24 +129,39 @@ function addLine() {
 }
 
 // Función para agregar una imagen
-function addImage() {
-    const imageUrl = prompt("Introduce la URL de la imagen:");
-    if (imageUrl) {
-        fabric.Image.fromURL(imageUrl, function(img) {
-            img.set({
-                left: 100,
-                top: 100,
-                selectable: true,
-            });
-            canvas.add(img);
-        });
-    } else {
-        alert("No se introdujo una URL válida.");
-    }
+function addImageFromComputer() {
+    deactivateDrawingMode(); // Desactivar dibujo
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*'; // Solo permitir archivos de imagen
+
+    input.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = (e) => {
+                fabric.Image.fromURL(e.target.result, (img) => {
+                    img.set({
+                        left: 100,
+                        top: 100,
+                        selectable: true,
+                    });
+                    canvas.add(img);
+                });
+            };
+
+            reader.readAsDataURL(file); // Convertir archivo a base64
+        }
+    });
+
+    input.click(); // Simular un clic para abrir el selector de archivos
 }
+
 
 // Función para agregar texto
 function addText() {
+    deactivateDrawingMode(); // Desactivar dibujo
     const text = new fabric.Textbox('Escribe aquí', {
         left: 100,
         top: 100,
@@ -94,36 +172,95 @@ function addText() {
     canvas.add(text);
 }
 
-// Función para guardar el estado del canvas
-function saveCanvas() {
-    const json = canvas.toJSON();
-    localStorage.setItem('canvasState', JSON.stringify(json));
-    alert("Canvas guardado correctamente.");
-}
-
-// Función para cargar el estado del canvas
-function loadCanvas() {
-    const savedCanvas = localStorage.getItem('canvasState');
-    if (savedCanvas) {
-        canvas.loadFromJSON(savedCanvas, canvas.renderAll.bind(canvas));
-        alert("Canvas cargado correctamente.");
+// Función para borrar el objeto seleccionado
+function deleteSelected() {
+    deactivateDrawingMode(); // Desactivar dibujo
+    const activeObject = canvas.getActiveObject();
+    if (activeObject) {
+        canvas.remove(activeObject);
     } else {
-        alert("No hay ningún estado guardado.");
+        alert('Selecciona un objeto para eliminar.');
     }
 }
 
-// Teclas rápidas (opcional)
-document.addEventListener('keydown', (event) => {
-    if (event.key === 's') {
-        saveCanvas();
-    } else if (event.key === 'l') {
-        loadCanvas();
+// Detectar el trazo de borrado y eliminar objetos interceptados
+canvas.on('path:created', (event) => {
+    if (isEraserActive) {
+        const path = event.path; // Obtenemos el trazo
+        const objectsToRemove = []; // Lista de objetos a eliminar
+
+        canvas.getObjects().forEach((obj) => {
+            // Verificar si el objeto y el trazo colisionan
+            if (isObjectIntersected(obj, path)) {
+                objectsToRemove.push(obj);
+            }
+        });
+
+        // Eliminar los objetos interceptados
+        objectsToRemove.forEach((obj) => canvas.remove(obj));
+
+        // Eliminar el trazo del borrador
+        canvas.remove(path);
     }
 });
 
+// Función para verificar la intersección entre un objeto y el trazo
+function isObjectIntersected(obj, path) {
+    const objBoundingBox = obj.getBoundingRect();
+    const pathBoundingBox = path.getBoundingRect();
+
+    // Detectar si los límites de ambos se superponen
+    return !(
+        objBoundingBox.left > pathBoundingBox.left + pathBoundingBox.width ||
+        objBoundingBox.left + objBoundingBox.width < pathBoundingBox.left ||
+        objBoundingBox.top > pathBoundingBox.top + pathBoundingBox.height ||
+        objBoundingBox.top + objBoundingBox.height < pathBoundingBox.top
+    );
+}
+// Función para manejar la tecla Delete
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Delete') { // Detectar la tecla "Delete"
+        const activeObject = canvas.getActiveObject();
+        if (activeObject) {
+            canvas.remove(activeObject); // Eliminar el objeto seleccionado
+        }
+    }
+});
+
+// Función para cambiar el color del texto
+function setTextColor(color) {
+    const activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'textbox') { // Verifica si es un textbox
+        activeObject.set('fill', color);
+        canvas.renderAll(); // Actualiza el canvas
+    } else {
+        alert("Selecciona un cuadro de texto para cambiar el color.");
+    }
+}
+
+// Función para cambiar la fuente del texto
+function setFontFamily(font) {
+    const activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'textbox') {
+        activeObject.set('fontFamily', font);
+        canvas.renderAll();
+    } else {
+        alert("Selecciona un cuadro de texto para cambiar la fuente.");
+    }
+}
+
+// Función para cambiar el tamaño del texto
+function setFontSize(size) {
+    const activeObject = canvas.getActiveObject();
+    if (activeObject && activeObject.type === 'textbox') {
+        activeObject.set('fontSize', size);
+        canvas.renderAll();
+    } else {
+        alert("Selecciona un cuadro de texto para cambiar el tamaño.");
+    }
+}
+
+
 </script>
 
-
-    
 {% endblock %}
-
