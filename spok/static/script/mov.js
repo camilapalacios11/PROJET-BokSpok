@@ -119,12 +119,12 @@ $(function(){
     const now = new Date();
     const horaFecha = now.toLocaleString(); // Obtener hora y fecha actuales
 
-    document.querySelector(".box_mensaje").innerHTML += `
-      <div class="alert alert-danger" role="alert">
+    document.querySelector(".mensajes").innerHTML += `
+      <div class="alert alert-danger" role="alert" style="padding:5px;">
         ${m}
         <div>
-          <small class="fst-italic fw-bold"> ${nombre} ${apellido} </small>
-          <small class="float-end">${horaFecha}</small>
+          <small class="fst-italic fw-bold" style="font-size: 12px;"> ${nombre} ${apellido} </small>
+          <small class="float-end" style="font-size: 12px;">${horaFecha}</small>
         </div>
       </div>
     `;

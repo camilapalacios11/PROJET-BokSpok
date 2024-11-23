@@ -57,24 +57,53 @@ sala x
 </div>
 
 <div class="despelote">
+  <!--
+    -->
   <div class="box_mensaje" style="padding: 15px;">
+    <div class="board">
+      <div class="list" id="list-1">
+        <h3>Por Hacer</h3>
+        <div class="mensajes" draggable="true" class="card"></div>
+      </div>
+      <div class="list" id="list-2">
+        <h3>En Proceso</h3>
+        <div class="card" draggable="true">Tarea 3</div>
+      </div>
+      <div class="list" id="list-3">
+        <h3>Hecho</h3>
+        <div class="card" draggable="true">Tarea 4</div>
+      </div>
+    </div>  
   </div>
 </div>
 
-  <script src="{% static '/script/jquery-3.7.1.min.js' %}"></script>
 
 <div class="message-container">
   <div  class="message-form">
-      <input id="inpMensaje" name="message" placeholder="Escribe aquí tu mensaje..." required></input>
+    <input id="inpMensaje" name="message" placeholder="Escribe aquí tu mensaje..." required></input>
+    <div class="button-container">
+      <h6 for="">urgencias</h6>
+      <input type="radio" id="option-red" name="color" value="red">
+      <label for="option-red" class="red"></label>
+      
+      <!-- Opción amarilla -->
+      <input type="radio" id="option-yellow" name="color" value="yellow">
+        <label for="option-yellow" class="yellow"></label>
+
+        <!-- Opción azul -->
+        <input type="radio" id="option-blue" name="color" value="blue">
+        <label for="option-blue" class="blue"></label>
+      </div>
+      
       <button submit="" id="btnMensaje" >Enviar</button>
   </div>
 </div>
 
 <!--
   <div class="board">
-      <div class="list" id="list-1">
-        <h3>Por Hacer</h3>
-        <div class="card" draggable="true">Tarea 1</div>
+    <div class="list" id="list-1">
+      <h3>Por Hacer</h3>
+      <div class="card" draggable="true">Tarea 1</div>
         <div class="card" draggable="true">Tarea 2</div>
       </div>
       <div class="list" id="list-2">
@@ -86,14 +115,15 @@ sala x
         <div class="card" draggable="true">Tarea 4</div>
       </div>
     </div>
--->
-  <script>
-    var nombre =  '{{ request.user.first_name }}'
+    -->
+    <script>
+      var nombre =  '{{ request.user.first_name }}'
     var apellido =  '{{ request.user.last_name }}'
     var sala_id = "{{sala.id}}"
   </script>
 
+<script src="{% static '/script/jquery-3.7.1.min.js' %}"></script>
 
- 
+
 {% endblock %}
 

@@ -10,33 +10,53 @@ mis salas
 /* General Styles */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    
 }
-canvas {
-    border: 1px solid black;
-}
+
 </style>
 
 <div class="container">
     <div class="main-content">
         <div class="herramientas">
-            <div id="tools">
-                <button onclick="activatePencil()">Lápiz</button>
-                <button onclick="addRectangle()">Rectángulo</button>
-                <button onclick="addLine()">Línea</button>
-                <button onclick="addImageFromComputer()">Subir Imagen</button>
-                <button onclick="addText()">Texto</button>
-                <button onclick="exportCanvas()">Exportar</button>
-                <button onclick="importCanvas()">Importar</button>
-                <button onclick="activateEraser()">Borrador</button>
-            </div>
+            <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+<div id="tools">
+    <button onclick="activatePencil()" title="Lápiz">
+        <i class="fas fa-pencil-alt"></i>
+    </button>
+    <button onclick="addRectangle()" title="Rectángulo">
+        <i class="fas fa-square"></i>
+    </button>
+    <button onclick="addCircle()" title="Rectángulo">
+        <i class="fas fa-circle"></i>
+    </button>
+    <button onclick="addLine()" title="Línea">
+        <i class="fas fa-slash"></i>
+    </button>
+    <button onclick="addImageFromComputer()" title="Subir Imagen">
+        <i class="fas fa-upload"></i>
+    </button>
+    <button onclick="addText()" title="Texto">
+        <i class="fas fa-font"></i>
+    </button>
+    <button onclick="exportCanvasAsJPG()" title="Exportar como JPG">
+        <i class="fas fa-file-image"></i>
+    </button>
+    
+    
+    <button onclick="activateEraser()" title="Borrador">
+        <i class="fas fa-eraser"></i>
+    </button>
+
+    
+</div>
         </div>
         <div class="canvas">
             <canvas id="canvas"></canvas>
         </div>
     </div>
-    <div class="caracteristicas">Div características
-            <h3>Opciones de texto</h3>
+    <div class="caracteristicas">
+            <h5>OPCIONES DE TEXTO</h5>
             <div>
                 <p>Color:</p>
                 <button onclick="setTextColor('red')" style="background-color: red;"></button>
@@ -55,7 +75,27 @@ canvas {
                 <button onclick="setFontSize(24)">M</button>
                 <button onclick="setFontSize(32)">L</button>
             </div>
+
+            <h3>Opciones de Figura</h3>
+    <div>
+        <p>Borde:</p>
+        <button onclick="setStrokeColor('red')" style="background-color: red;"></button>
+        <button onclick="setStrokeColor('green')" style="background-color: green;"></button>
+        <button onclick="setStrokeColor('blue')" style="background-color: blue;"></button>
     </div>
+    <div>
+        <p>Relleno:</p>
+        <button onclick="setFillColor('yellow')" style="background-color: yellow;"></button>
+        <button onclick="setFillColor('pink')" style="background-color: pink;"></button>
+        <button onclick="setFillColor('none')">Sin Relleno</button>
+    </div>
+    <div>
+        <p>Opacidad:</p>
+        <input type="range" min="0" max="1" step="0.1" value="1" onchange="setOpacity(this.value)">
+    </div>
+    </div>
+
+    
 </div>
 
 <script>
@@ -81,29 +121,29 @@ let isEraserActive = false; // Modo borrador
 
 // Función para activar el lápiz
 function activatePencil() {
-    isEraserActive = false; // Desactivar el borrador
-    canvas.isDrawingMode = true; // Activar modo dibujo
-    canvas.freeDrawingBrush.width = 2; // Tamaño del lápiz
-    canvas.freeDrawingBrush.color = 'black'; // Color del lápiz
+    isEraserActive = false; 
+    canvas.isDrawingMode = true; 
+    canvas.freeDrawingBrush.width = 2; 
+    canvas.freeDrawingBrush.color = 'black'; 
 }
 
 // Función para activar el borrador
 function activateEraser() {
-    isEraserActive = true; // Activar modo borrador
-    canvas.isDrawingMode = true; // Activar modo dibujo
-    canvas.freeDrawingBrush.width = 10; // Tamaño del borrador
-    canvas.freeDrawingBrush.color = 'rgba(255, 255, 255, 0)'; // Color transparente para no dibujar
+    isEraserActive = true; 
+    canvas.isDrawingMode = true; 
+    canvas.freeDrawingBrush.width = 10;
+    canvas.freeDrawingBrush.color = 'rgba(255, 255, 255, 0)'; 
 }
 
 // Función para desactivar el modo de dibujo (por ejemplo, al agregar texto o figuras)
 function deactivateDrawingMode() {
-    isEraserActive = false; // Desactivar el borrador
-    canvas.isDrawingMode = false; // Desactivar el modo dibujo
+    isEraserActive = false; 
+    canvas.isDrawingMode = false; 
 }
 
 // Función para agregar un rectángulo
 function addRectangle() {
-    deactivateDrawingMode(); // Desactivar dibujo
+    deactivateDrawingMode(); 
     const rect = new fabric.Rect({
         left: 100,
         top: 100,
@@ -115,7 +155,18 @@ function addRectangle() {
     canvas.add(rect);
 }
 
-// Función para agregar una línea
+function addCircle() {
+    deactivateDrawingMode(); 
+    const circle = new fabric.Circle({
+        left: 100, 
+        top: 100,  
+        fill: 'blue', 
+        radius: 50, 
+        selectable: true 
+    });
+    canvas.add(circle); // Agregar el círculo al canvas
+}
+
 function addLine() {
     deactivateDrawingMode(); // Desactivar dibujo
     const line = new fabric.Line([50, 50, 200, 50], {
@@ -249,7 +300,7 @@ function setFontFamily(font) {
     }
 }
 
-// Función para cambiar el tamaño del texto
+
 function setFontSize(size) {
     const activeObject = canvas.getActiveObject();
     if (activeObject && activeObject.type === 'textbox') {
@@ -259,6 +310,90 @@ function setFontSize(size) {
         alert("Selecciona un cuadro de texto para cambiar el tamaño.");
     }
 }
+
+// Función para cambiar el color del borde
+function setStrokeColor(color) {
+    const activeObject = canvas.getActiveObject();
+    if (activeObject && (activeObject.type === 'rect' || activeObject.type === 'circle' || activeObject.type === 'line')) {
+        activeObject.set('stroke', color);
+        canvas.renderAll(); // Actualiza el canvas
+    } else {
+        alert("Selecciona una figura para cambiar el borde.");
+    }
+}
+
+// Función para cambiar el color de relleno
+function setFillColor(color) {
+    const activeObject = canvas.getActiveObject();
+    if (activeObject && (activeObject.type === 'rect' || activeObject.type === 'circle')) {
+        if (color === 'none') {
+            activeObject.set('fill', ''); // Sin relleno
+        } else {
+            activeObject.set('fill', color); // Cambia el color de relleno
+        }
+        canvas.renderAll();
+    } else {
+        alert("Selecciona una figura para cambiar el color de relleno.");
+    }
+}
+
+// Función para cambiar la opacidad
+function setOpacity(value) {
+    const activeObject = canvas.getActiveObject();
+    if (activeObject && (activeObject.type === 'rect' || activeObject.type === 'circle' || activeObject.type === 'line')) {
+        activeObject.set('opacity', parseFloat(value)); // Cambia la opacidad
+        canvas.renderAll();
+    } else {
+        alert("Selecciona una figura para cambiar la opacidad.");
+    }
+}
+
+function exportCanvasAsJPG() {
+    // Generar una URL de datos en formato JPG
+    const dataURL = canvas.toDataURL({
+        format: 'jpeg', // Formato de la imagen
+        quality: 1.0    // Calidad máxima
+    });
+
+    // Crear un enlace temporal para la descarga
+    const link = document.createElement('a');
+    link.href = dataURL;
+    link.download = 'canvas-image.jpg'; // Nombre del archivo a descargar
+    link.click();
+}
+
+window.addEventListener('resize', () => {
+    canvas.setWidth(container.offsetWidth);
+    canvas.setHeight(container.offsetHeight);
+
+    // Asegurarse de que el fondo blanco cubra el nuevo tamaño
+    const background = canvas.item(0); // Obtener el primer objeto (fondo)
+    if (background && background.type === 'rect') {
+        background.set({
+            width: canvas.width,
+            height: canvas.height,
+        });
+    }
+    canvas.renderAll(); // Renderizar cambios
+});
+// Función para establecer fondo blanco
+function setCanvasBackground(color = 'white') {
+    const background = new fabric.Rect({
+        left: 0,
+        top: 0,
+        width: canvas.width,
+        height: canvas.height,
+        fill: color,
+        selectable: false, // No seleccionable
+        evented: false,    // No responde a eventos
+    });
+
+    // Agregar el fondo como primer elemento del canvas
+    canvas.insertAt(background, 0); // Inserta en la primera posición
+}
+
+// Llamar a la función para establecer el fondo blanco
+setCanvasBackground('white');
 
 
 </script>

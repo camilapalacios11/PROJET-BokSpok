@@ -143,7 +143,8 @@ CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',
         "CONFIG": {
-            "host": [("localhost", 6379)]
+            "host": [("localhost",6379)],
         }
+        # hash del contenedor: 220dfd55a05638cc08cf41d42db828e552396cfc2fc771c4285bf7830b799602
     },
 }

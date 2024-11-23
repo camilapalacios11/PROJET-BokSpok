@@ -17,26 +17,23 @@
 
         <p> Menu </p>
         <img style="width: 130px; height: 115px;margin-top: -20px; margin-bottom: 10px;" src="{% static 'img/toro_ola.png' %}" alt="">
-        <a href="#">
-          <i class="fa fa-user-o" aria-hidden="true"></i>
-          Cami
+        <a href="{% url 'index' %}">
+    
+          Mis salas
         </a>
         <a href="#">
-          <i class="fa fa-laptop" aria-hidden="true"></i>
-          Computers
+    
+          Tareas
         </a>
-        <a href="#">
-          <i class="fa fa-clone" aria-hidden="true"></i>
-          Shared with me
+        <a href="{% url 'canvas' %}">
+       
+          Canvas
         </a>
-        <a href="#">
-          <i class="fa fa-star-o" aria-hidden="true"></i>
-          Starred
+        <a href="">
+          
+          Anotaciones
         </a>
-        <a href="#">
-          <i class="fa fa-trash-o" aria-hidden="true"></i>
-          Trash
-        </a>
+        
       </aside>
        
       <div class="total">

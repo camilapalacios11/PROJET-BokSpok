@@ -102,6 +102,8 @@ aside {
 .board {
   display: flex;
   gap: 20px;
+  height: 100%;
+  width: 100%;
 }
 
 .list {
@@ -426,10 +428,10 @@ aside {
 
 /*  ENVIO */
 .message-container {
-  width: 80%;
+  width: 100%;
   min-width: 400px;
   border-radius: 10px;
-  
+  background-color: ;
 }
 
 /* Formulario */
@@ -437,12 +439,13 @@ aside {
   display: flex;
   flex-direction: row;
   justify-content:space-between;
+
 }
 
 
 /* Campo de texto */
 .message-form input {
-  width: 87%;
+  width: 75%;
   height: 40px;
   padding: 5px;
   margin-bottom: 15px;
@@ -478,8 +481,8 @@ aside {
 } 
 .box_mensaje{
   height: 100%;
-  width: 40%;
-  background-color: #42795A;
+  width: 83%;
+  background-color: blue;
   opacity: 80%;
   
 }
@@ -577,68 +580,141 @@ aside {
 
 
 /* TODO SOBRE CANVAS */
+/* General Styles */
 #tools {
-  margin-bottom: 10px;
+  display: flex; /* Alineación en fila */
+  justify-content: center; 
+  align-items: center; 
+  gap: 10px; /* Espaciado entre los botones */
+   
 }
+
+#tools button {
+  margin-top: -10px;
+  background: none; /* Sin fondo */
+  border: none; /* Sin bordes */
+  cursor: pointer;
+  font-size: 20px; /* Tamaño del ícono */
+  color: #000; /* Color del ícono */
+}
+
+#tools i{
+  font-size: medium;
+  color: #083A2E;
+}
+
+#tools button:hover {
+  color: #666; /* Cambia el color al pasar el cursor */
+}
+
+
+/* Layout Container */
 .container {
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: 100%; /* Full viewport height */
-  
+  height: calc(100% - 10px);
 }
 
-/* Main Content */
+/* Main Content Section */
 .main-content {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  width: 90%;
+
 }
 
-/* Div herramientas */
+/* Herramientas (Tools) Section */
 .herramientas {
-  height: 10%; /* Takes 15% of the height */
+  height: 8%; /* Ocupa el 8% de la altura */
   background-color: #fef8f8;
-  border-bottom: 1px solid #ccc;
-  padding: 10px;
-  box-sizing: border-box;
+  border: 1px solid #ccc;
   
-
-  padding: 20px;
-  border: 1px solid #888;
-
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-/* Div canvas */
+
 .canvas {
-  flex-grow: 1; /* Fills remaining space */
+  flex-grow: 1; /* Ocupa el espacio restante */
   background-color: #fff;
-  padding: 10px;
-  box-sizing: border-box;
+  border: 1px solid #888;
+  border-radius: 10px;
+  margin-top: 10px;
+  padding: 3px;
   position: relative;
+  box-sizing: border-box;
+  -webkit-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.55);
+  -moz-box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.55);
+  box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.55);
 }
 
-/* Div características */
+
+
 .caracteristicas {
-  width: 25%; /* Takes 25% of the width */
+  width: 25%; 
   background-color: #f8f5f1;
-  /* border-left: 1px solid #ccc; */
   padding: 10px;
   box-sizing: border-box;
-  
+
 }
+
 .caracteristicas button {
   margin: 5px;
   padding: 10px;
   border: none;
   cursor: pointer;
+  
 }
 
-/* Responsive Design */
+
 @media screen and (max-width: 50%) {
   .caracteristicas {
-      display: none; /* Hides características */
+    display: none; /* Oculta la sección características en pantallas pequeñas */
   }
+}
+
+
+/* botoness  */
+
+/* Contenedor del div */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Espacio entre los botones */
+  margin: 5px;
+}
+
+/* Botones circulares */
+.button-container label {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+/* Colores de los botones */
+.red { background-color: #ff706d; }
+.yellow { background-color: #f7ec53; }
+.blue { background-color: #77c096; }
+
+/* Hover para resaltar */
+.button-container label:hover {
+  transform: scale(1.1);
+}
+
+/* Ocultar los inputs tipo radio */
+input[type="radio"] {
+  display: none;
+}
+
+/* Estilo cuando se selecciona un botón */
+input[type="radio"]:checked + label {
+  border: 1px solid black; /* Borde negro cuando está seleccionado */
 }
