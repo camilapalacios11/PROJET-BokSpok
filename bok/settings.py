@@ -141,9 +141,10 @@ CORS_ALLOWED_ORIGINS = ['*']
 
 CHANNEL_LAYERS = {
     'default': {
-        'BACKEND': 'channels.layers.InMemoryChannelLayer',
-        "CONFIG": {
-            "host": [("localhost",6379)],
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        
+        'CONFIG': {
+            'hosts': [('localhost',6379)],
         }
         # hash del contenedor: 220dfd55a05638cc08cf41d42db828e552396cfc2fc771c4285bf7830b799602
     },

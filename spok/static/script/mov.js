@@ -93,6 +93,35 @@ $(function(){
       console.log('WEBSOCKET CERRADO')
   }
 
+  chatSocket.onmessage = function(data){
+    const datamsj = JSON.parse(data.data)
+    var msj = datamsj.message
+    var username = datamsj.username
+    var datetime = datamsj.datetimeer
+    var priori = datamsj.prioridad
+    var perso = datamsj.personas
+
+    // Crear tarjeta
+    const card = document.createElement("div");
+    card.className = "card";
+    card.draggable = true;
+    card.id = `card-${Date.now()}`; // Generar un ID único usando la marca de tiempo
+    card.innerHTML = `
+      ${msj}
+      <div>
+        <small class="fst-italic fw-bold" style="font-size: 12px;"> ${username} </small>
+        <small class="float-end" style="font-size: 12px;">${datetime}</small>
+      </div>
+    `;
+  
+    // Añadir eventos de arrastre
+    card.addEventListener("dragstart", dragStart);
+  
+    // Insertar la tarjeta en la lista "Por Hacer"
+    document.querySelector("#list-1").appendChild(card);
+
+
+  }
   // Agregar eventos al botón y al input
   document.querySelector("#btnMensaje").addEventListener("click", sendMensaje);
 
@@ -110,6 +139,11 @@ $(function(){
     // Cargar mensaje en HTML si el campo no está vacío
     if (mensa.value.trim() !== "") {
       loadMensajeHTML(mensa.value.trim());
+
+      chatSocket.send(JSON.stringify({
+        message: mensa.value.trim(),
+      }))
+      console.log(mensa.value.trim())
       mensa.value = ""; // Limpiar el campo de texto
     }
   }
@@ -118,17 +152,29 @@ $(function(){
   function loadMensajeHTML(m) {
     const now = new Date();
     const horaFecha = now.toLocaleString(); // Obtener hora y fecha actuales
-
-    document.querySelector(".mensajes").innerHTML += `
-      <div class="alert alert-danger" role="alert" style="padding:5px;">
-        ${m}
-        <div>
-          <small class="fst-italic fw-bold" style="font-size: 12px;"> ${nombre} ${apellido} </small>
-          <small class="float-end" style="font-size: 12px;">${horaFecha}</small>
-        </div>
+  
+    // Crear tarjeta
+    const card = document.createElement("div");
+    card.className = "card";
+    card.draggable = true;
+    card.id = `card-${Date.now()}`; // Generar un ID único usando la marca de tiempo
+    card.innerHTML = `
+      ${m}
+      <div>
+        <small class="fst-italic fw-bold" style="font-size: 12px;"> ${nombre} ${apellido} </small>
+        <small class="float-end" style="font-size: 12px;">${horaFecha}</small>
       </div>
     `;
+  
+    // Añadir eventos de arrastre
+    card.addEventListener("dragstart", dragStart);
+  
+    // Insertar la tarjeta en la lista "Por Hacer"
+    document.querySelector("#list-1").appendChild(card);
   }
+  
+
+
 });
 
 
